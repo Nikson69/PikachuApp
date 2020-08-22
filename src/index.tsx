@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {observable} from 'mobx';
 import {observer} from 'mobx-react';
+import { Button } from 'antd';
+import './index.css'
 
 class AppState {
     @observable timer = 0;
@@ -25,6 +27,9 @@ class TimerView extends React.Component<{appState: AppState}, {}> {
                 <button onClick={this.onReset}>
                     Seconds passed: {this.props.appState.timer}
                 </button>
+                <Button onClick={this.onReset}>
+                    Seconds passed antd: {this.props.appState.timer}
+                </Button>
             </div>
         );
      }
