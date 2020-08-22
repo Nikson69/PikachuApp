@@ -1,0 +1,38 @@
+{
+  "name": "pikachuapp",
+  "version": "1.0.0",
+  "description": "Pokemon web app",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nikson69/PikachuApp.git"
+  },
+  "author": "Nikson69",
+  "bugs": {
+    "url": "https://github.com/Nikson69/PikachuApp/issues"
+  },
+  "homepage": "https://github.com/Nikson69/PikachuApp#readme",
+  "keywords": [
+    "react",
+    "reactjs",
+    "boilerplate",
+    "mobx",
+    "starter-kit"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/react-dom": "^16.9.8",
+    "awesome-typescript-loader": "^5.2.1",
+    "typescript": "^4.0.2",
+    "webpack": "^4.44.1",
+    "webpack-dev-server": "3.11.0"
+  },
+  "dependencies": {
+    "mobx": "^5.15.6",
+    "mobx-react": "^6.2.5",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
