@@ -23,6 +23,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
+    "@types/react": "^16.9.46",
     "@types/react-dom": "^16.9.8",
     "awesome-typescript-loader": "^5.2.1",
     "style-loader": "^1.2.1",
@@ -36,7 +37,8 @@
     "mobx-react": "^6.2.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "antd": "^4.5.4",
-    "responsive-ant-menu": "^1.0.14"
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "antd": "^4.5.4"
   }
 }
