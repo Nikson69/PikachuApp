@@ -36,6 +36,7 @@
     "mobx-react": "^6.2.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "antd": "^4.5.4"
+    "antd": "^4.5.4",
+    "responsive-ant-menu": "^1.0.14"
   }
 }
