@@ -1,22 +1,23 @@
 import ReactDOM from "react-dom";
 import React from "react";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { configure } from 'mobx';
 import { Provider } from "mobx-react";
 import App from "./components/App";
-import { testStore } from "./stores/index"
+import { testStore, menuStore } from "./stores/index"
 import './index.css';
 
 const stores = {
-    testStore
+    testStore,
+    menuStore
 };
 configure({ enforceActions: "observed" })
 
 ReactDOM.render(
   <Provider {...stores}>
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>
+      </BrowserRouter>
   </Provider>,
   document.getElementById('root')
 );
