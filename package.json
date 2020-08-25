@@ -41,7 +41,6 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "antd": "^4.5.4",
-    "@ant-design/icons": "^4.2.2",
-    "superagent": "^6.0.0"
+    "@ant-design/icons": "^4.2.2"
   }
 }

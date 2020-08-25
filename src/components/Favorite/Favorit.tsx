@@ -4,6 +4,7 @@ import { inject, observer } from "mobx-react";
 import { Button } from 'antd';
 import { testStoreName, Test} from '../../stores/testStore';
 import { MenuStoreModel, FAVORITE, menuStoreName } from '../../stores/menuStore';
+import { toJS } from 'mobx';
 
 interface FavoriteProps {
     testStore?: Test
@@ -25,7 +26,8 @@ export class FavoriteComponent extends React.Component<FavoriteProps> {
         this.menuStore.selectMenu(FAVORITE);
     }
 
-    componentDidMount () {
+    async componentDidMount () {
+        await this.testStore.loadTypes();
         setInterval(() => {
             this.testStore.incrementTimer()
         }, 1000);
@@ -47,6 +49,7 @@ export class FavoriteComponent extends React.Component<FavoriteProps> {
 
      onReset = () => {
         this.testStore.resetTimer();
+        console.log('getServerUrls output', toJS(this.testStore.data));
      }
 };
 
