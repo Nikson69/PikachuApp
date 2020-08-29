@@ -4,13 +4,14 @@ import { BrowserRouter } from "react-router-dom";
 import { configure } from 'mobx';
 import { Provider } from "mobx-react";
 import App from "./components/App";
-import { testStore, menuStore, listsStore } from "./stores/index"
+import { testStore, menuStore, listsStore, pokemonStore } from "./stores/index"
 import './index.css';
 
 const stores = {
     testStore,
     menuStore,
-    listsStore
+    listsStore,
+    pokemonStore
 };
 configure({ enforceActions: "observed" })
 
