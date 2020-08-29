@@ -18,7 +18,7 @@ class ListsStore {
   @observable listTypes: Type[] = new Array<Type>();
   @observable isLoadingTypes = true;
   @observable pokemonList: Type[] = new Array<Type>();
-  @observable isLoadingPokemon = false;
+  @observable isLoadingPokemon = true;
 
   @action
   loadTypes = async () => {
@@ -39,7 +39,8 @@ class ListsStore {
       await pokeFetch.get(currentUrl)
           .then(action((n: PokemonList) => {
             this.pokemonList = [];
-            n.pokemon.forEach(p => this.pokemonList.push(p.pokemon));
+            n.pokemon.length > 0 
+              && n.pokemon.forEach(p => this.pokemonList.push(p.pokemon));
           }))
           .finally(action(() => {
               this.isLoadingPokemon = false;

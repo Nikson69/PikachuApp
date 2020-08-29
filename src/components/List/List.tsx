@@ -9,21 +9,27 @@ import { TableModel } from '../../models/TableModel';
 import { Type } from '../../models/Type';
 import { TablePokemonComponent } from './TablePokemon/TablePokemon';
 import './style.css';
+import { pokemonStoreName, PokemonStoreModel } from '../../stores/pokemonStore';
 
 interface ListProps extends RouteComponentProps {
     menuStore?: MenuStoreModel,
-    listsStore?: ListsStoreModel
+    listsStore?: ListsStoreModel,
+    pokemonStore?: PokemonStoreModel,
 }
 
 interface ListState {
     type: string
 }
 
-@inject(listStoreName, menuStoreName)
+@inject(listStoreName, menuStoreName, pokemonStoreName)
 @observer
 export class ListComponent extends React.Component<ListProps, ListState> {
     get listsStore(): ListsStoreModel {
         return this.props.listsStore;
+    }
+
+    get pokemonStore(): PokemonStoreModel {
+        return this.props.pokemonStore;
     }
 
     get menuStore(): MenuStoreModel {
@@ -51,8 +57,9 @@ export class ListComponent extends React.Component<ListProps, ListState> {
         this.setState({ type: record.key })
     }
 
-    onChangePokemon = (record: TableModel) => {
-        console.log(record)
+    onChangePokemon = async (record: TableModel) => {
+        await this.pokemonStore.loadPokemon(record.url);
+        this.props.history.push('/card');
     }
 
     getTableData = (value: Type[]): TableModel[] => {
@@ -65,7 +72,8 @@ export class ListComponent extends React.Component<ListProps, ListState> {
         return (
             <Spin
                 tip="Loading..."
-                spinning={this.listsStore.isLoadingTypes}
+                spinning={this.listsStore.isLoadingTypes
+                    && this.listsStore.isLoadingPokemon}
                 wrapperClassName='spin-list-style'
                 className='spin-list-style'
             >
