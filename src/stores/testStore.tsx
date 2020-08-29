@@ -1,5 +1,5 @@
 import { observable, action, runInAction } from 'mobx';
-import { TestReq, requests } from '../common/fetch';
+import { pokeFetch } from '../common/fetch';
 
 export interface Test {
     timer: number;
@@ -24,7 +24,7 @@ class TestStore {
     @action
     loadTypes = async () => {
         this.isLoading = true;
-        await TestReq.getTypes()
+        await pokeFetch.get('')
             .then(action(n => {
                 this.data = n
             }))

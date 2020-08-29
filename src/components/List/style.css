@@ -1,0 +1,12 @@
+.spin-list-style {
+    display: flex;
+    /* flex-direction: column; */
+    flex: 1;
+}
+.spin-list-style > .ant-spin-container{
+    display: flex;
+    flex: 1;
+}
+.spin-list-style .ant-spin-container .ant-table-wrapper {
+    flex: 1;
+}
