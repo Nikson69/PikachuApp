@@ -17,13 +17,9 @@ interface ListProps extends RouteComponentProps {
     pokemonStore?: PokemonStoreModel,
 }
 
-interface ListState {
-    type: string
-}
-
 @inject(listStoreName, menuStoreName, pokemonStoreName)
 @observer
-export class ListComponent extends React.Component<ListProps, ListState> {
+export class ListComponent extends React.Component<ListProps> {
     get listsStore(): ListsStoreModel {
         return this.props.listsStore;
     }
@@ -40,21 +36,19 @@ export class ListComponent extends React.Component<ListProps, ListState> {
         super(props);
         this.menuStore.selectMenu(LIST);
         const param = new URLSearchParams(window.location.search);
-        const type = param.get('type');   
-        this.state = {
-            type: type || ''
-        }
+        const type = param.get('type'); 
+        type && props.listsStore.changeTypes(type);
     }
 
     async componentDidMount() {
         this.listsStore.listTypes.length === 0 && await this.listsStore.loadTypes()       
-        this.state.type && await this.listsStore.loadPokemon(null, this.state.type);
+        this.listsStore.selectedType && await this.listsStore.loadPokemon(null, this.listsStore.selectedType);
     }
 
     onChangeTypes = async (record: TableModel) => {
         this.props.history.push({ search: `?type=${record.key}` })
         this.listsStore.loadPokemon(null, record.key);
-        this.setState({ type: record.key })
+        this.listsStore.changeTypes(record.key);
     }
 
     onChangePokemon = async (record: TableModel) => {
@@ -80,12 +74,12 @@ export class ListComponent extends React.Component<ListProps, ListState> {
                 <TableTypeComponent
                     data={this.getTableData(this.listsStore.listTypes)}
                     onChangeData={this.onChangeTypes}
-                    type={this.state.type}
+                    type={this.listsStore.selectedType}
                 />
                 <TablePokemonComponent
                     data={this.getTableData(this.listsStore.pokemonList)}
                     onChangeData={this.onChangePokemon}
-                    type={this.state.type}
+                    type={this.listsStore.selectedType}
                 />
             </Spin>
         );

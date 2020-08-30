@@ -2,7 +2,6 @@ import * as React from 'react';
 import { withRouter } from "react-router-dom";
 import { Table } from 'antd';
 import { TableModel } from '../../../models/TableModel';
-import { useHistory } from "react-router-dom";
 
 interface TableProps {
     data: TableModel[];

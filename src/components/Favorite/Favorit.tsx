@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { withRouter, RouteComponentProps } from "react-router-dom";
 import { inject, observer } from "mobx-react";
-import { Button, Table } from 'antd';
-import { testStoreName, Test} from '../../stores/testStore';
+import { Table } from 'antd';
 import { MenuStoreModel, FAVORITE, menuStoreName } from '../../stores/menuStore';
-import { toJS } from 'mobx';
-import { favoritesStore } from '../../stores';
 import { favoritesStoreName, FavoritesStoreModel } from '../../stores/favoritesStore';
 import { RestOutlined } from '@ant-design/icons';
 import { PokemonStoreModel, pokemonStoreName } from '../../stores/pokemonStore';

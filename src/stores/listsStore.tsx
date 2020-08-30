@@ -11,6 +11,8 @@ export interface ListsStoreModel {
   isLoadingPokemon: boolean;
   loadTypes(): void;
   loadPokemon(url: string, type?: string): void;
+  selectedType: string;
+  changeTypes(type: string): void;
 }
 
 class ListsStore {
@@ -19,6 +21,12 @@ class ListsStore {
   @observable isLoadingTypes = true;
   @observable pokemonList: Type[] = new Array<Type>();
   @observable isLoadingPokemon = true;
+  @observable selectedType = '';
+
+  @action
+  changeTypes = (type: string) => {
+    this.selectedType = type;
+  }
 
   @action
   loadTypes = async () => {

@@ -1,8 +1,5 @@
 import * as React from 'react';
 import { withRouter, Switch, Route, Redirect } from "react-router-dom";
-import { inject, observer } from "mobx-react";
-import { Button } from 'antd';
-import { testStoreName, Test} from '../stores/testStore';
 import MenuComponent from './Menu/Menu';
 import { ListComponent } from './List/List';
 import { CardComponent } from './Card/Card';
