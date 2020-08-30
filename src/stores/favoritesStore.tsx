@@ -32,9 +32,12 @@ class FavoritesStore {
     @action
     deleteFavorites(value: FavoriteModel): void {
         const data = localStorageGet<FavoriteModel[]>(POKEMONS);
-        data.splice(data.indexOf(value), 1); 
-        this.favorite = data;
-        localStorageSet(POKEMONS, data)
+        const index = data.findIndex(n => n.name === value.name);
+        if (index !== -1 ) {
+            data.splice(index, 1); 
+            this.favorite = data;
+            localStorageSet(POKEMONS, data)
+        }
     }   
 
     @action
