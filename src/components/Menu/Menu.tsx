@@ -35,7 +35,6 @@ export class MenuComponent extends React.Component<MenuProps> {
 
     onSelectHandler(value: SelectInfo) {
         this.props.history.push(`/${value.key}`);
-        console.log(value);
     }
 
     render() {
