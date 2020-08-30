@@ -4,11 +4,11 @@ import { BrowserRouter } from "react-router-dom";
 import { configure } from 'mobx';
 import { Provider } from "mobx-react";
 import App from "./components/App";
-import { testStore, menuStore, listsStore, pokemonStore } from "./stores/index"
+import { favoritesStore, menuStore, listsStore, pokemonStore } from "./stores/index"
 import './index.css';
 
 const stores = {
-    testStore,
+    favoritesStore,
     menuStore,
     listsStore,
     pokemonStore

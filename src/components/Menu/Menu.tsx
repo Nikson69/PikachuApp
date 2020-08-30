@@ -3,25 +3,34 @@ import React from 'react';
 import { withRouter, RouteComponentProps  } from "react-router-dom";
 import { Menu } from 'antd';
 import { UnorderedListOutlined, IdcardOutlined, StarOutlined } from '@ant-design/icons';
-import { useHistory } from "react-router-dom";
 import { SelectInfo } from 'rc-menu/lib/interface';
 import { inject, observer } from 'mobx-react';
 import { menuStoreName, MenuStoreModel } from '../../stores/menuStore';
+import { FavoritesStoreModel, favoritesStoreName } from '../../stores/favoritesStore';
 
 
 interface MenuProps extends RouteComponentProps {
     menuStore?: MenuStoreModel
+    favoritesStore?: FavoritesStoreModel
 }
 
-@inject(menuStoreName)
+@inject(menuStoreName, favoritesStoreName)
 @observer
 export class MenuComponent extends React.Component<MenuProps> {
     get menuStore(): MenuStoreModel {        
         return this.props.menuStore;
     }
+
+    get favoritesStore(): FavoritesStoreModel {        
+        return this.props.favoritesStore;
+    }
     
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        this.favoritesStore.loadFavorites();
     }
 
     onSelectHandler(value: SelectInfo) {
