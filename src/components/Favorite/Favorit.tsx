@@ -1,55 +1,70 @@
 import * as React from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router-dom";
 import { inject, observer } from "mobx-react";
-import { Button } from 'antd';
+import { Button, Table } from 'antd';
 import { testStoreName, Test} from '../../stores/testStore';
 import { MenuStoreModel, FAVORITE, menuStoreName } from '../../stores/menuStore';
 import { toJS } from 'mobx';
+import { favoritesStore } from '../../stores';
+import { favoritesStoreName, FavoritesStoreModel } from '../../stores/favoritesStore';
+import { RestOutlined } from '@ant-design/icons';
+import { PokemonStoreModel, pokemonStoreName } from '../../stores/pokemonStore';
+import { FavoriteModel } from '../../models/Favorite';
 
-interface FavoriteProps {
-    testStore?: Test
-    menuStore?: MenuStoreModel
+interface FavoriteProps extends RouteComponentProps{
+    favoritesStore?: FavoritesStoreModel,
+    menuStore?: MenuStoreModel,
+    pokemonStore?: PokemonStoreModel,
 }
 
-@inject(testStoreName, menuStoreName)
+@inject(favoritesStoreName, menuStoreName, pokemonStoreName)
 @observer
 export class FavoriteComponent extends React.Component<FavoriteProps> { 
-    get testStore(): Test {        
-        return this.props.testStore;
+    get favoritesStore(): FavoritesStoreModel {        
+        return this.props.favoritesStore;
     }
     get menuStore(): MenuStoreModel {        
         return this.props.menuStore;
+    }   
+
+    get pokemonStore(): PokemonStoreModel {
+        return this.props.pokemonStore;
     }
+
+    columns = [
+        {
+          title: 'Pokemon Name',
+          dataIndex: 'name'
+        },
+        {
+            title:"Delete Favorites",
+            render:(text, record) => (
+                <RestOutlined onClick={() => this.favoritesStore.deleteFavorites(record)} />
+            )
+        }   
+    ];
     constructor(props) {
         super(props);
-        this.testStore.startWith(1000);
         this.menuStore.selectMenu(FAVORITE);
     }
 
-    async componentDidMount () {
-        await this.testStore.loadTypes();
-        setInterval(() => {
-            this.testStore.incrementTimer()
-        }, 1000);
+    onChangeData(record: FavoriteModel) {
+        this.pokemonStore.addPokemon(record.pokemon);
+        this.props.history.push('/card');
     }
 
     render() {
-        const timer = this.testStore.timer;
         return (
-            <div>
-                <button onClick={this.onReset}>
-                    Seconds passed: {timer}
-                </button>
-                <Button onClick={this.onReset}>
-                    Seconds passed antd: {timer}
-                </Button>
-            </div>
+            <Table
+                columns={this.columns}
+                dataSource={this.favoritesStore.favorite}
+                onRow={(record) => ({
+                    onClick: () => {
+                        this.onChangeData(record)
+                    },
+                  })}                
+            />
         );
-     }
-
-     onReset = () => {
-        this.testStore.resetTimer();
-        console.log('getServerUrls output', toJS(this.testStore.data));
      }
 };
 

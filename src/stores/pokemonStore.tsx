@@ -5,6 +5,7 @@ import { PokemonModel } from '../models/Pokemon';
 export interface PokemonStoreModel {
   pokemon: PokemonModel
   loadPokemon(url: string): void;
+  addPokemon(pokemon: PokemonModel): void;
 }
 
 class PokemonStore {
@@ -18,6 +19,11 @@ class PokemonStore {
           .then(action((n: PokemonModel) => {
             this.pokemon = n; 
           }));
+  }
+
+  @action
+  addPokemon = (pokemon: PokemonModel) => {
+      this.pokemon = pokemon;
   }
 }
 

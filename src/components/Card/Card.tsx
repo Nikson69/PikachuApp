@@ -5,17 +5,29 @@ import { Avatar, Descriptions } from 'antd';
 import { StarOutlined, StarFilled } from '@ant-design/icons';
 import { menuStoreName, MenuStoreModel, CARD } from '../../stores/menuStore';
 import { pokemonStoreName, PokemonStoreModel } from '../../stores/pokemonStore';
+import { FavoritesStoreModel, favoritesStoreName } from '../../stores/favoritesStore';
+import { PokemonModel } from '../../models/Pokemon';
+import { toJS } from 'mobx';
 
 interface CardProps {
     pokemonStore?: PokemonStoreModel,
-    menuStore?: MenuStoreModel
+    menuStore?: MenuStoreModel,
+    favoritesStore?: FavoritesStoreModel
 }
 
-@inject(menuStoreName, pokemonStoreName)
+interface CardState {
+    isFavorite: boolean
+}
+
+@inject(menuStoreName, pokemonStoreName, favoritesStoreName)
 @observer
-export class CardComponent extends React.Component<CardProps> {
+export class CardComponent extends React.Component<CardProps, CardState> {
     get pokemonStore(): PokemonStoreModel {
         return this.props.pokemonStore;
+    }
+
+    get favoritesStore(): FavoritesStoreModel {        
+        return this.props.favoritesStore;
     }
 
     get menuStore(): MenuStoreModel {
@@ -25,14 +37,34 @@ export class CardComponent extends React.Component<CardProps> {
     constructor(props) {
         super(props);
         this.menuStore.selectMenu(CARD);
+        this.state = {
+            isFavorite: props.pokemonStore.pokemon && this.favoritesStore.findFavorites(props.pokemonStore.pokemon.name)
+        }
     }
 
-    iconText = (name: string) => (
-        <span style={{marginRight:'5%'}} onClick={() => console.log('ssssssss')}>
-            <StarOutlined style={{fontSize:40}}/>
-            <StarFilled style={{fontSize:40}}/>
-        </span>
-    );
+    iconText = (pokemon: PokemonModel) => {
+        if(this.state.isFavorite) {
+            return ( 
+                <StarFilled 
+                    style={{marginRight:'5%',fontSize:40}}
+                    onClick={() => {
+                        this.favoritesStore.deleteFavorites({name: pokemon.name, pokemon: pokemon})
+                        this.setState({ isFavorite: !this.state.isFavorite })
+                    }}
+                />
+            )
+        } else {
+            return (
+                <StarOutlined 
+                    style={{marginRight:'5%',fontSize:40}}
+                    onClick={() => {
+                        this.favoritesStore.addFavorites({name: pokemon.name, pokemon: pokemon})
+                        this.setState({ isFavorite: !this.state.isFavorite })
+                    }}
+                />
+            )
+        }
+    };
     
     render() {
         const pokemon = this.pokemonStore.pokemon;
@@ -46,7 +78,7 @@ export class CardComponent extends React.Component<CardProps> {
                             <span style={{marginLeft:'1%', fontSize: 30}}>{pokemon.name}</span>
                         </React.Fragment>   
                     } 
-                    extra={this.iconText(pokemon.name)} 
+                    extra={this.iconText(pokemon)} 
                     bordered
                 >
                     <Descriptions.Item label="Height" key={pokemon.height}>{pokemon.height}</Descriptions.Item>

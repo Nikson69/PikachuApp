@@ -8,18 +8,11 @@ import { ListComponent } from './List/List';
 import { CardComponent } from './Card/Card';
 import { FavoriteComponent } from './Favorite/Favorit';
 
-interface AppProps {
-    testStore: Test
-}
-
 export class App extends React.Component {
     constructor(props) {
         super(props);
     }
-
-    componentDidMount () {
-    }
-
+    
     render() {
         return (
             <React.Fragment>

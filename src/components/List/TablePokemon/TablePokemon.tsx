@@ -19,7 +19,6 @@ export class TablePokemonComponent extends React.Component<TableProps> {
 
     constructor(props) {
         super(props);
-        console.log('sssssssssssssssss', props.type)
     }
 
     render() {
