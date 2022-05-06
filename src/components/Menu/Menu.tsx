@@ -2,7 +2,7 @@ import './menu.css'
 import React from 'react';
 import { withRouter, RouteComponentProps  } from "react-router-dom";
 import { Menu } from 'antd';
-import { UnorderedListOutlined, IdcardOutlined, StarOutlined } from '@ant-design/icons';
+import { UnorderedListOutlined, IdcardOutlined as IdCardOutlined, StarOutlined } from '@ant-design/icons';
 import { SelectInfo } from 'rc-menu/lib/interface';
 import { inject, observer } from 'mobx-react';
 import { menuStoreName, MenuStoreModel } from '../../stores/menuStore';
@@ -49,7 +49,7 @@ export class MenuComponent extends React.Component<MenuProps> {
                     <Menu.Item key="list" icon={<UnorderedListOutlined />}>
                         List Pokemons
                     </Menu.Item>
-                    <Menu.Item key="card" icon={<IdcardOutlined />}>
+                    <Menu.Item key="card" icon={<IdCardOutlined />}>
                         Pokemon Card
                     </Menu.Item>
                     <Menu.Item key="favorite" icon={<StarOutlined />}>
